@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D6B9E1331D3420DD00FB2DC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */; };
+		D6B9E1351D3420DD00FB2DC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */; };
+		D6B9E1381D3420DD00FB2DC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */; };
+		D6B9E13A1D3420DD00FB2DC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6B9E1391D3420DD00FB2DC1 /* Assets.xcassets */; };
+		D6B9E13D1D3420DD00FB2DC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */; };
+		D6B9E1481D3420DD00FB2DC1 /* WunderTempTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1471D3420DD00FB2DC1 /* WunderTempTests.swift */; };
+		D6B9E1531D3420DD00FB2DC1 /* WunderTempUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1521D3420DD00FB2DC1 /* WunderTempUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D6B9E1441D3420DD00FB2DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6B9E1271D3420DD00FB2DC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B9E12E1D3420DD00FB2DC1;
+			remoteInfo = WunderTemp;
+		};
+		D6B9E14F1D3420DD00FB2DC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6B9E1271D3420DD00FB2DC1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B9E12E1D3420DD00FB2DC1;
+			remoteInfo = WunderTemp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D6B9E12F1D3420DD00FB2DC1 /* WunderTemp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WunderTemp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D6B9E1371D3420DD00FB2DC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D6B9E1391D3420DD00FB2DC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D6B9E13C1D3420DD00FB2DC1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D6B9E13E1D3420DD00FB2DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6B9E1431D3420DD00FB2DC1 /* WunderTempTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WunderTempTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6B9E1471D3420DD00FB2DC1 /* WunderTempTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WunderTempTests.swift; sourceTree = "<group>"; };
+		D6B9E1491D3420DD00FB2DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6B9E14E1D3420DD00FB2DC1 /* WunderTempUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WunderTempUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6B9E1521D3420DD00FB2DC1 /* WunderTempUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WunderTempUITests.swift; sourceTree = "<group>"; };
+		D6B9E1541D3420DD00FB2DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D6B9E12C1D3420DD00FB2DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E1401D3420DD00FB2DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E14B1D3420DD00FB2DC1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D6B9E1261D3420DD00FB2DC1 = {
+			isa = PBXGroup;
+			children = (
+				D6B9E1311D3420DD00FB2DC1 /* WunderTemp */,
+				D6B9E1461D3420DD00FB2DC1 /* WunderTempTests */,
+				D6B9E1511D3420DD00FB2DC1 /* WunderTempUITests */,
+				D6B9E1301D3420DD00FB2DC1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D6B9E1301D3420DD00FB2DC1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D6B9E12F1D3420DD00FB2DC1 /* WunderTemp.app */,
+				D6B9E1431D3420DD00FB2DC1 /* WunderTempTests.xctest */,
+				D6B9E14E1D3420DD00FB2DC1 /* WunderTempUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D6B9E1311D3420DD00FB2DC1 /* WunderTemp */ = {
+			isa = PBXGroup;
+			children = (
+				D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */,
+				D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */,
+				D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */,
+				D6B9E1391D3420DD00FB2DC1 /* Assets.xcassets */,
+				D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */,
+				D6B9E13E1D3420DD00FB2DC1 /* Info.plist */,
+			);
+			path = WunderTemp;
+			sourceTree = "<group>";
+		};
+		D6B9E1461D3420DD00FB2DC1 /* WunderTempTests */ = {
+			isa = PBXGroup;
+			children = (
+				D6B9E1471D3420DD00FB2DC1 /* WunderTempTests.swift */,
+				D6B9E1491D3420DD00FB2DC1 /* Info.plist */,
+			);
+			path = WunderTempTests;
+			sourceTree = "<group>";
+		};
+		D6B9E1511D3420DD00FB2DC1 /* WunderTempUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D6B9E1521D3420DD00FB2DC1 /* WunderTempUITests.swift */,
+				D6B9E1541D3420DD00FB2DC1 /* Info.plist */,
+			);
+			path = WunderTempUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D6B9E12E1D3420DD00FB2DC1 /* WunderTemp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B9E1571D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTemp" */;
+			buildPhases = (
+				D6B9E12B1D3420DD00FB2DC1 /* Sources */,
+				D6B9E12C1D3420DD00FB2DC1 /* Frameworks */,
+				D6B9E12D1D3420DD00FB2DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WunderTemp;
+			productName = WunderTemp;
+			productReference = D6B9E12F1D3420DD00FB2DC1 /* WunderTemp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D6B9E1421D3420DD00FB2DC1 /* WunderTempTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B9E15A1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempTests" */;
+			buildPhases = (
+				D6B9E13F1D3420DD00FB2DC1 /* Sources */,
+				D6B9E1401D3420DD00FB2DC1 /* Frameworks */,
+				D6B9E1411D3420DD00FB2DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6B9E1451D3420DD00FB2DC1 /* PBXTargetDependency */,
+			);
+			name = WunderTempTests;
+			productName = WunderTempTests;
+			productReference = D6B9E1431D3420DD00FB2DC1 /* WunderTempTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D6B9E14D1D3420DD00FB2DC1 /* WunderTempUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B9E15D1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempUITests" */;
+			buildPhases = (
+				D6B9E14A1D3420DD00FB2DC1 /* Sources */,
+				D6B9E14B1D3420DD00FB2DC1 /* Frameworks */,
+				D6B9E14C1D3420DD00FB2DC1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6B9E1501D3420DD00FB2DC1 /* PBXTargetDependency */,
+			);
+			name = WunderTempUITests;
+			productName = WunderTempUITests;
+			productReference = D6B9E14E1D3420DD00FB2DC1 /* WunderTempUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D6B9E1271D3420DD00FB2DC1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Stephen Brennan";
+				TargetAttributes = {
+					D6B9E12E1D3420DD00FB2DC1 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					D6B9E1421D3420DD00FB2DC1 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = D6B9E12E1D3420DD00FB2DC1;
+					};
+					D6B9E14D1D3420DD00FB2DC1 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = D6B9E12E1D3420DD00FB2DC1;
+					};
+				};
+			};
+			buildConfigurationList = D6B9E12A1D3420DD00FB2DC1 /* Build configuration list for PBXProject "WunderTemp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D6B9E1261D3420DD00FB2DC1;
+			productRefGroup = D6B9E1301D3420DD00FB2DC1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D6B9E12E1D3420DD00FB2DC1 /* WunderTemp */,
+				D6B9E1421D3420DD00FB2DC1 /* WunderTempTests */,
+				D6B9E14D1D3420DD00FB2DC1 /* WunderTempUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D6B9E12D1D3420DD00FB2DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B9E13D1D3420DD00FB2DC1 /* LaunchScreen.storyboard in Resources */,
+				D6B9E13A1D3420DD00FB2DC1 /* Assets.xcassets in Resources */,
+				D6B9E1381D3420DD00FB2DC1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E1411D3420DD00FB2DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E14C1D3420DD00FB2DC1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D6B9E12B1D3420DD00FB2DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B9E1351D3420DD00FB2DC1 /* ViewController.swift in Sources */,
+				D6B9E1331D3420DD00FB2DC1 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E13F1D3420DD00FB2DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B9E1481D3420DD00FB2DC1 /* WunderTempTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B9E14A1D3420DD00FB2DC1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B9E1531D3420DD00FB2DC1 /* WunderTempUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D6B9E1451D3420DD00FB2DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B9E12E1D3420DD00FB2DC1 /* WunderTemp */;
+			targetProxy = D6B9E1441D3420DD00FB2DC1 /* PBXContainerItemProxy */;
+		};
+		D6B9E1501D3420DD00FB2DC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B9E12E1D3420DD00FB2DC1 /* WunderTemp */;
+			targetProxy = D6B9E14F1D3420DD00FB2DC1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6B9E1371D3420DD00FB2DC1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D6B9E13C1D3420DD00FB2DC1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D6B9E1551D3420DD00FB2DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D6B9E1561D3420DD00FB2DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D6B9E1581D3420DD00FB2DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WunderTemp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTemp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D6B9E1591D3420DD00FB2DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WunderTemp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTemp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D6B9E15B1D3420DD00FB2DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = WunderTempTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTempTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WunderTemp.app/WunderTemp";
+			};
+			name = Debug;
+		};
+		D6B9E15C1D3420DD00FB2DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = WunderTempTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTempTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WunderTemp.app/WunderTemp";
+			};
+			name = Release;
+		};
+		D6B9E15E1D3420DD00FB2DC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WunderTempUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTempUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WunderTemp;
+			};
+			name = Debug;
+		};
+		D6B9E15F1D3420DD00FB2DC1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WunderTempUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = esscbee.WunderTempUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WunderTemp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D6B9E12A1D3420DD00FB2DC1 /* Build configuration list for PBXProject "WunderTemp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B9E1551D3420DD00FB2DC1 /* Debug */,
+				D6B9E1561D3420DD00FB2DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6B9E1571D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTemp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B9E1581D3420DD00FB2DC1 /* Debug */,
+				D6B9E1591D3420DD00FB2DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D6B9E15A1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B9E15B1D3420DD00FB2DC1 /* Debug */,
+				D6B9E15C1D3420DD00FB2DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D6B9E15D1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B9E15E1D3420DD00FB2DC1 /* Debug */,
+				D6B9E15F1D3420DD00FB2DC1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D6B9E1271D3420DD00FB2DC1 /* Project object */;
+}
