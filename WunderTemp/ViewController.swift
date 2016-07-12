@@ -23,24 +23,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateLocationURL()
-        
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerCallBack), userInfo: nil, repeats: false)
+//        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerCallBack), userInfo: nil, repeats: false)
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
         
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
+
+        updateLocationURL()
         
+
+    }
+    
+    func updateLocationURL() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
     }
     
     
@@ -66,7 +72,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         
                         let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
                         if let d = json["current_observation"] as? [String : AnyObject] {
+                            print("current_observation \(d)")
                             if let tempString = d["temperature_string"] as? String {
+                                let date = d["local_time_rfc822"] as? String
                                 if let loc = d["display_location"] as? [String : AnyObject] {
                                     var descr : String = "None!"
                                     if let n = self.neighborhood {
@@ -77,7 +85,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     
                                     dispatch_async(dispatch_get_main_queue(), {
                                         self.tempLabel.text = "\(descr): \(tempString)"
-                                        self.timeLabel.text = "\(String(NSDate()))"
+                                        self.timeLabel.text = date ??
+                                            "\(String(NSDate()))"
                                     })
                                     
                                     
@@ -117,75 +126,64 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         guard let coord = manager.location?.coordinate else {
             return
         }
-        if let oldLoc = self.locValue {
-            let mag = distance(oldLoc, long: coord.longitude, lat: coord.latitude)
-            if mag < 0.0000001 {
-                return
-            }
-        }
-        self.locValue = coord
-        self.moved = true
-    }
-    
-    func updateLocationURL() {
-        if let coord = self.locValue {
-            let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
-            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithRequest(urlRequest) {
-                (data, response, error) -> Void in
-                
-                let httpResponse = response as! NSHTTPURLResponse
-                let statusCode = httpResponse.statusCode
-                
-                if (statusCode == 200) {
-                    do{
-                        
-                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                        //                    print(json)
-                        if let location = json["location"] as? [String : AnyObject] {
-                            if let nearby = location["nearby_weather_stations"]  as? [String : AnyObject] {
-                                //                            print(nearby)
-                                if let pws = nearby["pws"] as? [String : AnyObject] {
-                                    print(pws)
-                                    if let station = pws["station"] as? [[ String : AnyObject ]]{
-                                        var foundDescr : [ String : AnyObject ]?
-                                        var distance = Double.infinity
-                                        
-                                        
-                                        for ss in station {
-                                            let lat = ss["lat"] as! Double
-                                            let long = ss["lon"] as! Double
-                                            let mag = self.distance(coord, long: long, lat: lat)
-                                            if mag < distance {
-                                                foundDescr = ss
-                                                distance = mag
-                                            }
-                                        }
-                                        if let descr = foundDescr {
-                                            if let stationId = descr["id"] as? String {
-                                                self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
-                                            }
-                                            
-                                            if let neighborhood = descr["neighborhood"] as? String {
-                                                self.neighborhood = neighborhood
-                                            } else {
-                                                self.neighborhood = nil
-                                            }
-                                            
+        self.locationManager.stopUpdatingLocation()
+        let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                do{
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    //                    print(json)
+                    if let location = json["location"] as? [String : AnyObject] {
+                        if let nearby = location["nearby_weather_stations"]  as? [String : AnyObject] {
+                            //                            print(nearby)
+                            if let pws = nearby["pws"] as? [String : AnyObject] {
+                                print(pws)
+                                if let station = pws["station"] as? [[ String : AnyObject ]]{
+                                    var foundDescr : [ String : AnyObject ]?
+                                    var distance = Double.infinity
+                                    
+                                    
+                                    for ss in station {
+                                        let lat = ss["lat"] as! Double
+                                        let long = ss["lon"] as! Double
+                                        let mag = self.distance(coord, long: long, lat: lat)
+                                        if mag < distance {
+                                            foundDescr = ss
+                                            distance = mag
                                         }
                                     }
+                                    if let descr = foundDescr {
+                                        if let stationId = descr["id"] as? String {
+                                            self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
+                                        }
+                                        
+                                        if let neighborhood = descr["neighborhood"] as? String {
+                                            self.neighborhood = neighborhood
+                                        } else {
+                                            self.neighborhood = nil
+                                        }
+                                        
+                                    }
                                 }
-                                
                             }
+                            
                         }
-                    } catch {
-                        
                     }
+                    self.updateTemp()
+                } catch {
+                    
                 }
             }
-            task.resume()
         }
+        task.resume()
     }
     
 }
