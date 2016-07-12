@@ -19,10 +19,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var nextTime = 0.0
 
+    private var foregroundNotification: NSObjectProtocol!
+
     
     
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var weatherImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +38,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
 
-        updateLocationURL()
+        foregroundNotification = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: NSOperationQueue.mainQueue()) {
+            [unowned self] notification in
+            
+            self.updateLocationURL()
+        }
+    }
+    
+    deinit {
+        // make sure to remove the observer when this view controller is dismissed/deallocated
         
+        NSNotificationCenter.defaultCenter().removeObserver(foregroundNotification)
+    }
 
+
+    override func viewDidAppear(animated: Bool) {
+
+        updateLocationURL()
     }
     
     func updateLocationURL() {
@@ -85,8 +102,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                     
                                     dispatch_async(dispatch_get_main_queue(), {
                                         self.tempLabel.text = "\(descr): \(tempString)"
-                                        self.timeLabel.text = date ??
-                                            "\(String(NSDate()))"
+                                        self.timeLabel.text = date ?? "\(String(NSDate()))"
+                                        
+                                        if let img_url = d["icon_url"] as? String {
+                                            if let url = NSURL(string: img_url) {
+                                                if let data = NSData(contentsOfURL: url) {
+                                                    self.weatherImage.image = UIImage(data: data)
+                                                }
+                                            }
+                                        }
                                     })
                                     
                                     
