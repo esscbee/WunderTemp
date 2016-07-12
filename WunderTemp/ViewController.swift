@@ -15,6 +15,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locValue:CLLocationCoordinate2D?
     var stationUrl : String?
     var neighborhood: String?
+    var moved = true
     
     var nextTime = 0.0
 
@@ -25,7 +26,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerCallBack), userInfo: nil, repeats: true)
+        updateLocationURL()
+        
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerCallBack), userInfo: nil, repeats: false)
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -57,7 +60,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 
                 let httpResponse = response as! NSHTTPURLResponse
                 let statusCode = httpResponse.statusCode
-                var statusText = "searching"
                 
                 if (statusCode == 200) {
                     do{
@@ -84,7 +86,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             }
                         }
                     } catch {
-                        statusText = "JSON error \(String(NSDate()))"
+    
                     }
                 } else {
                     self.tempLabel.text = "status: \(statusCode)"
@@ -105,59 +107,85 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func distance(p1: CLLocationCoordinate2D, long: CDouble, lat: CDouble) -> Double {
+        let dx2 = pow(p1.latitude - lat, 2.0)
+        let dy2 = pow(p1.longitude - long, 2.0)
+        return dx2 + dy2
+    }
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coord = manager.location?.coordinate else {
             return
         }
         if let oldLoc = self.locValue {
-            if oldLoc.latitude == coord.latitude && oldLoc.longitude == coord.longitude {
+            let mag = distance(oldLoc, long: coord.longitude, lat: coord.latitude)
+            if mag < 0.0000001 {
                 return
             }
         }
         self.locValue = coord
-       
-        let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
-        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(urlRequest) {
-            (data, response, error) -> Void in
-            
-            let httpResponse = response as! NSHTTPURLResponse
-            let statusCode = httpResponse.statusCode
-            
-            if (statusCode == 200) {
-                do{
-                    
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-//                    print(json)
-                    if let location = json["location"] as? [String : AnyObject] {
-                        if let nearby = location["nearby_weather_stations"]  as? [String : AnyObject] {
-//                            print(nearby)
-                            if let pws = nearby["pws"] as? [String : AnyObject] {
-                                print(pws)
-                                if let station = pws["station"] {
-                                    if let descr = station[0] as? [String : AnyObject ] {
-                                        if let stationId = descr["id"] as? String {
-                                            self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
-                                        }
+        self.moved = true
+    }
+    
+    func updateLocationURL() {
+        if let coord = self.locValue {
+            let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
+            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithRequest(urlRequest) {
+                (data, response, error) -> Void in
+                
+                let httpResponse = response as! NSHTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                
+                if (statusCode == 200) {
+                    do{
+                        
+                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        //                    print(json)
+                        if let location = json["location"] as? [String : AnyObject] {
+                            if let nearby = location["nearby_weather_stations"]  as? [String : AnyObject] {
+                                //                            print(nearby)
+                                if let pws = nearby["pws"] as? [String : AnyObject] {
+                                    print(pws)
+                                    if let station = pws["station"] as? [[ String : AnyObject ]]{
+                                        var foundDescr : [ String : AnyObject ]?
+                                        var distance = Double.infinity
                                         
-                                        if let neighborhood = descr["neighborhood"] as? String {
-                                            self.neighborhood = neighborhood
-                                        } else {
-                                            self.neighborhood = nil
+                                        
+                                        for ss in station {
+                                            let lat = ss["lat"] as! Double
+                                            let long = ss["lon"] as! Double
+                                            let mag = self.distance(coord, long: long, lat: lat)
+                                            if mag < distance {
+                                                foundDescr = ss
+                                                distance = mag
+                                            }
+                                        }
+                                        if let descr = foundDescr {
+                                            if let stationId = descr["id"] as? String {
+                                                self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
+                                            }
+                                            
+                                            if let neighborhood = descr["neighborhood"] as? String {
+                                                self.neighborhood = neighborhood
+                                            } else {
+                                                self.neighborhood = nil
+                                            }
+                                            
                                         }
                                     }
                                 }
+                                
                             }
-                            
                         }
+                    } catch {
+                        
                     }
-                } catch {
-                    
                 }
             }
+            task.resume()
         }
-        task.resume()
     }
     
 }
