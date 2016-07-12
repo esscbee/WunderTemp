@@ -179,6 +179,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                         let lat = ss["lat"] as! Double
                                         let long = ss["lon"] as! Double
                                         let mag = self.distance(coord, long: long, lat: lat)
+                                        let neighborhood = ss["neighborhood"] as! String
+                                        let numString = String(format: "%.20f", mag)
+                                        print("\(numString) - \(neighborhood)")
                                         if mag < distance {
                                             foundDescr = ss
                                             distance = mag
