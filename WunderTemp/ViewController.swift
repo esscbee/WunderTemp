@@ -9,13 +9,67 @@
 import UIKit
 import CoreLocation
 
+let key = "5828c48f756a7400"
+let wuAPI = "http://api.wunderground.com/api"
+
+//"http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
+
+func computeDistance(p1: CLLocationCoordinate2D, long: CDouble, lat: CDouble) -> Double {
+    let dx2 = pow(p1.latitude - lat, 2.0)
+    let dy2 = pow(p1.longitude - long, 2.0)
+    return pow(dx2 + dy2, 0.5)
+}
+
+class Station : CustomStringConvertible {
+    let stationRecord : [ String : AnyObject]
+    let distance : Double
+    let distanceString : String
+    
+    init(stationRecord : [ String : AnyObject], coord : CLLocationCoordinate2D ) {
+        self.stationRecord = stationRecord
+        
+        let lat = stationRecord["lat"] as! Double
+        let long = stationRecord["lon"] as! Double
+        self.distance = computeDistance(coord, long: long, lat: lat)
+        distanceString = String(format: "%.20f", distance)
+//        let neighborhood = ss["neighborhood"] as! String
+    }
+    
+    var urlString : String {
+        get {
+           return "\(wuAPI)/\(key)/conditions/q/pws:\(stationId).json"
+        }
+    }
+    var stationId : String {
+        get {
+            return stationRecord["id"] as! String
+        }
+    }
+    
+    var neighborhood : String? {
+        get {
+            return stationRecord["neighborhood"] as? String
+        }
+    }
+    
+    var description : String {
+        get {
+            var locn = "no neighborhood"
+            if let n = neighborhood {
+                locn = n
+            }
+            return "\(distanceString) \(locn)"
+        }
+    }
+    
+}
+
 class ViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var stations : [Station]?
     
     let locationManager = CLLocationManager()
     var locValue:CLLocationCoordinate2D?
-    var stationUrl : String?
-    var neighborhood: String?
-    var moved = true
     
     var nextTime = 0.0
 
@@ -74,8 +128,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func updateTemp() {
-        if let urlString = stationUrl {
-            let requestURL: NSURL = NSURL(string: urlString)!
+        if let ss = stations {
+            if ss.isEmpty {
+                return
+            }
+            let theStation = ss[0]
+            let requestURL: NSURL = NSURL(string: theStation.urlString)!
             let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
             let session = NSURLSession.sharedSession()
             let task = session.dataTaskWithRequest(urlRequest) {
@@ -94,7 +152,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 let date = d["local_time_rfc822"] as? String
                                 if let loc = d["display_location"] as? [String : AnyObject] {
                                     var descr : String = "None!"
-                                    if let n = self.neighborhood {
+                                    if let n = theStation.neighborhood {
                                         descr = n
                                     } else if let locName = loc["full"] as? String {
                                         descr = locName
@@ -131,7 +189,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func timerCallBack() {
-        if let _ = self.stationUrl {
+        if let _ = self.stations {
             let now = NSDate().timeIntervalSince1970
             if now > self.nextTime {
                 updateTemp()
@@ -140,11 +198,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func distance(p1: CLLocationCoordinate2D, long: CDouble, lat: CDouble) -> Double {
-        let dx2 = pow(p1.latitude - lat, 2.0)
-        let dy2 = pow(p1.longitude - long, 2.0)
-        return dx2 + dy2
-    }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coord = manager.location?.coordinate else {
@@ -171,34 +224,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                             if let pws = nearby["pws"] as? [String : AnyObject] {
                                 print(pws)
                                 if let station = pws["station"] as? [[ String : AnyObject ]]{
-                                    var foundDescr : [ String : AnyObject ]?
-                                    var distance = Double.infinity
+                                    var newStations = [Station]()
                                     
                                     
                                     for ss in station {
-                                        let lat = ss["lat"] as! Double
-                                        let long = ss["lon"] as! Double
-                                        let mag = self.distance(coord, long: long, lat: lat)
-                                        let neighborhood = ss["neighborhood"] as! String
-                                        let numString = String(format: "%.20f", mag)
-                                        print("\(numString) - \(neighborhood)")
-                                        if mag < distance {
-                                            foundDescr = ss
-                                            distance = mag
-                                        }
+                                        newStations.append(Station(stationRecord: ss, coord: coord))
                                     }
-                                    if let descr = foundDescr {
-                                        if let stationId = descr["id"] as? String {
-                                            self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
-                                        }
-                                        
-                                        if let neighborhood = descr["neighborhood"] as? String {
-                                            self.neighborhood = neighborhood
-                                        } else {
-                                            self.neighborhood = nil
-                                        }
-                                        
+                                    self.stations = newStations.sort{ (e1, e2) -> Bool in
+                                        return e1.distance < e2.distance
                                     }
+                                    
+                                    for ss in self.stations! {
+                                        print("\(ss)")
+                                    }
+                                    
+//                                    if let descr = foundDescr {
+//                                        if let stationId = descr["id"] as? String {
+//                                            self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
+//                                        }
+//                                        
+//                                        if let neighborhood = descr["neighborhood"] as? String {
+//                                            self.neighborhood = neighborhood
+//                                        } else {
+//                                            self.neighborhood = nil
+//                                        }
+//                                        
+//                                    }
                                 }
                             }
                             
