@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D6384D401D35A27D00E4D0D7 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D6384D3F1D35A27D00E4D0D7 /* WeatherCell.xib */; };
 		D6B9E1331D3420DD00FB2DC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */; };
 		D6B9E1351D3420DD00FB2DC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */; };
 		D6B9E1381D3420DD00FB2DC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D6384D3F1D35A27D00E4D0D7 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		D6B9E12F1D3420DD00FB2DC1 /* WunderTemp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WunderTemp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */,
 				D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */,
+				D6384D3F1D35A27D00E4D0D7 /* WeatherCell.xib */,
 				D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */,
 				D6B9E1391D3420DD00FB2DC1 /* Assets.xcassets */,
 				D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */,
@@ -229,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6384D401D35A27D00E4D0D7 /* WeatherCell.xib in Resources */,
 				D6B9E13D1D3420DD00FB2DC1 /* LaunchScreen.storyboard in Resources */,
 				D6B9E13A1D3420DD00FB2DC1 /* Assets.xcassets in Resources */,
 				D6B9E1381D3420DD00FB2DC1 /* Main.storyboard in Resources */,
@@ -484,6 +488,7 @@
 				D6B9E1591D3420DD00FB2DC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D6B9E15A1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +497,7 @@
 				D6B9E15C1D3420DD00FB2DC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D6B9E15D1D3420DD00FB2DC1 /* Build configuration list for PBXNativeTarget "WunderTempUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +506,7 @@
 				D6B9E15F1D3420DD00FB2DC1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

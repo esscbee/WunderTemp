@@ -11,6 +11,7 @@ import CoreLocation
 
 let key = "5828c48f756a7400"
 let wuAPI = "http://api.wunderground.com/api"
+let maxWeather = 5
 
 //"http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
 
@@ -24,6 +25,12 @@ class Station : CustomStringConvertible {
     let stationRecord : [ String : AnyObject]
     let distance : Double
     let distanceString : String
+
+    var tempLabel : String?
+    var timeLabel : String?
+    var weatherImageData : NSData?
+    var processed = false
+
     
     init(stationRecord : [ String : AnyObject], coord : CLLocationCoordinate2D ) {
         self.stationRecord = stationRecord
@@ -64,7 +71,22 @@ class Station : CustomStringConvertible {
     
 }
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherCell : UITableViewCell {
+    @IBOutlet weak var weatherImage : UIImageView!
+    @IBOutlet weak var weatherLabel : UILabel!
+    @IBOutlet weak var timeLabel : UILabel!
+    
+    func loadItem(weather: String?, time: String?, maybeImage: NSData?) {
+        weatherLabel.text = weather ?? "No Weather"
+        timeLabel.text = time ?? "No Time"
+        if let image = maybeImage {
+            weatherImage.image = UIImage(data: image)
+            weatherImage.contentScaleFactor = 0.75
+        }
+    }
+}
+
+class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var stations : [Station]?
     
@@ -73,13 +95,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var nextTime = 0.0
 
+    @IBOutlet weak var weatherTable: UITableView!
+    
     private var foregroundNotification: NSObjectProtocol!
 
     
     
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var weatherImage: UIImageView!
+//    @IBOutlet weak var tempLabel: UILabel!
+//    @IBOutlet weak var timeLabel: UILabel!
+//    @IBOutlet weak var weatherImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +121,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             self.updateLocationURL()
         }
+        
+        let nib = UINib(nibName: "WeatherCell", bundle: nil)
+        
+//        self.weatherTable.registerClass(UITableViewCell.self)
+        self.weatherTable.registerNib(nib, forCellReuseIdentifier: "weatherCell")
+
     }
     
     deinit {
@@ -107,11 +137,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 
     override func viewDidAppear(animated: Bool) {
-
+        
         updateLocationURL()
     }
     
     func updateLocationURL() {
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -132,77 +163,87 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if ss.isEmpty {
                 return
             }
-            let theStation = ss[0]
-            let requestURL: NSURL = NSURL(string: theStation.urlString)!
-            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithRequest(urlRequest) {
-                (data, response, error) -> Void in
-                
-                let httpResponse = response as! NSHTTPURLResponse
-                let statusCode = httpResponse.statusCode
-                
-                if (statusCode == 200) {
-                    do{
-                        
-                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                        if let d = json["current_observation"] as? [String : AnyObject] {
-                            print("current_observation \(d)")
-                            if let tempString = d["temperature_string"] as? String {
-                                let date = d["local_time_rfc822"] as? String
-                                if let loc = d["display_location"] as? [String : AnyObject] {
-                                    var descr : String = "None!"
-                                    if let n = theStation.neighborhood {
-                                        descr = n
-                                    } else if let locName = loc["full"] as? String {
-                                        descr = locName
-                                    }
-                                    
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self.tempLabel.text = "\(descr): \(tempString)"
-                                        self.timeLabel.text = date ?? "\(String(NSDate()))"
+            for theStation in ss[0..<maxWeather] {
+                if theStation.processed {
+                    continue
+                }
+                theStation.processed = true
+                let requestURL: NSURL = NSURL(string: theStation.urlString)!
+                let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+                let session = NSURLSession.sharedSession()
+                let task = session.dataTaskWithRequest(urlRequest) {
+                    (data, response, error) -> Void in
+                    
+                    print("Get Weather \(theStation.description)")
+                    
+                    let httpResponse = response as! NSHTTPURLResponse
+                    let statusCode = httpResponse.statusCode
+                    
+                    if (statusCode == 200) {
+                        do{
+                            let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                            if let d = json["current_observation"] as? [String : AnyObject] {
+                                //                            print("current_observation \(d)")
+                                if let tempString = d["temperature_string"] as? String {
+                                    let date = d["local_time_rfc822"] as? String
+                                    if let loc = d["display_location"] as? [String : AnyObject] {
+                                        var descr : String = "None!"
+                                        if let n = theStation.neighborhood {
+                                            descr = n
+                                        } else if let locName = loc["full"] as? String {
+                                            descr = locName
+                                        }
                                         
+                                        theStation.tempLabel = "\(descr): \(tempString)"
+                                        theStation.timeLabel = date ?? "\(String(NSDate()))"
                                         if let img_url = d["icon_url"] as? String {
                                             if let url = NSURL(string: img_url) {
                                                 if let data = NSData(contentsOfURL: url) {
-                                                    self.weatherImage.image = UIImage(data: data)
+                                                    theStation.weatherImageData = data
                                                 }
                                             }
                                         }
-                                    })
-                                    
-                                    
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            self.weatherTable.reloadData()
+                                        })
+                                        
+                                    }
+                                    return
                                 }
-                                return
                             }
+                        } catch  {
+                            print("Exception!")
                         }
-                    } catch {
-    
+                    } else {
+                        print("status: \(statusCode)")
                     }
-                } else {
-                    self.tempLabel.text = "status: \(statusCode)"
                 }
+                
+                task.resume()
             }
-            
-            task.resume()
         }
     }
     
-    func timerCallBack() {
-        if let _ = self.stations {
-            let now = NSDate().timeIntervalSince1970
-            if now > self.nextTime {
-                updateTemp()
-                nextTime = now + 60
-            }
-        }
-    }
+//    func timerCallBack() {
+//        if let _ = self.stations {
+//            let now = NSDate().timeIntervalSince1970
+//            if now > self.nextTime {
+//                updateTemp()
+//                nextTime = now + 60
+//            }
+//        }
+//    }
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coord = manager.location?.coordinate else {
             return
         }
+        let now = NSDate().timeIntervalSince1970
+        if now < nextTime {
+            return
+        }
+        nextTime = now + 90
         self.locationManager.stopUpdatingLocation()
         let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
@@ -222,7 +263,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         if let nearby = location["nearby_weather_stations"]  as? [String : AnyObject] {
                             //                            print(nearby)
                             if let pws = nearby["pws"] as? [String : AnyObject] {
-                                print(pws)
+//                                print(pws)
                                 if let station = pws["station"] as? [[ String : AnyObject ]]{
                                     var newStations = [Station]()
                                     
@@ -264,5 +305,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         task.resume()
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let ret = min(stations?.count ?? 0, maxWeather)
+        print("tableView numberOfRowsInSection: \(ret)")
+        return ret
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = self.weatherTable.dequeueReusableCellWithIdentifier("weatherCell") as! WeatherCell
+        if let ss = stations?[indexPath.row] {
+            cell.loadItem(ss.tempLabel, time: ss.timeLabel, maybeImage: ss.weatherImageData)
+            
+        }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("didSelectRowAtIndexPath: \(indexPath)")
+        
+    }
 }
 
