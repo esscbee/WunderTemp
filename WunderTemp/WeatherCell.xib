@@ -8,11 +8,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="vPC-h1-mPv" customClass="WeatherCell" customModule="WunderTemp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="477" height="64"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="vPC-h1-mPv" customClass="WeatherCell" customModule="WunderTemp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="477" height="99"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vPC-h1-mPv" id="EVr-pg-sii">
-                <rect key="frame" x="0.0" y="0.0" width="477" height="64"/>
+                <rect key="frame" x="0.0" y="0.0" width="477" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6nZ-DF-Cee">
@@ -37,22 +37,31 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7V-vk-scN">
+                        <rect key="frame" x="217" y="65" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="6nZ-DF-Cee" firstAttribute="trailing" secondItem="EVr-pg-sii" secondAttribute="trailingMargin" id="0YO-na-Iit"/>
+                    <constraint firstItem="6nZ-DF-Cee" firstAttribute="trailing" secondItem="EVr-pg-sii" secondAttribute="trailingMargin" constant="-10" id="0YO-na-Iit"/>
                     <constraint firstItem="e9U-8o-KVT" firstAttribute="centerX" secondItem="EVr-pg-sii" secondAttribute="centerX" id="aHI-zK-Y8e"/>
                     <constraint firstItem="e9U-8o-KVT" firstAttribute="top" secondItem="EVr-pg-sii" secondAttribute="topMargin" id="b5P-lT-gae"/>
-                    <constraint firstItem="dzn-sA-Vzg" firstAttribute="top" secondItem="e9U-8o-KVT" secondAttribute="bottom" constant="7" id="yd1-Ay-hls"/>
+                    <constraint firstItem="q7V-vk-scN" firstAttribute="centerX" secondItem="EVr-pg-sii" secondAttribute="centerX" id="bef-SM-eCn"/>
+                    <constraint firstItem="q7V-vk-scN" firstAttribute="top" secondItem="dzn-sA-Vzg" secondAttribute="bottom" constant="8" id="u01-eQ-rTd"/>
+                    <constraint firstItem="dzn-sA-Vzg" firstAttribute="top" secondItem="e9U-8o-KVT" secondAttribute="bottom" constant="8" id="yd1-Ay-hls"/>
                     <constraint firstItem="6nZ-DF-Cee" firstAttribute="top" secondItem="EVr-pg-sii" secondAttribute="topMargin" id="z4t-Hq-bZx"/>
                     <constraint firstItem="dzn-sA-Vzg" firstAttribute="centerX" secondItem="EVr-pg-sii" secondAttribute="centerX" id="zpR-8m-Xe1"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="locationLabel" destination="q7V-vk-scN" id="a1p-bL-xVv"/>
                 <outlet property="timeLabel" destination="dzn-sA-Vzg" id="JQ6-bS-K5A"/>
                 <outlet property="weatherImage" destination="6nZ-DF-Cee" id="qj9-hd-CWN"/>
                 <outlet property="weatherLabel" destination="e9U-8o-KVT" id="2Zw-gd-mPN"/>
             </connections>
-            <point key="canvasLocation" x="613.5" y="165"/>
+            <point key="canvasLocation" x="613.5" y="182.5"/>
         </tableViewCell>
     </objects>
 </document>

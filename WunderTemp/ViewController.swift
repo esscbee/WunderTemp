@@ -31,6 +31,7 @@ class Station : CustomStringConvertible {
     var weatherImageData : NSData?
     var processed = false
 
+    let feetPer = 0.000003106264313
     
     init(stationRecord : [ String : AnyObject], coord : CLLocationCoordinate2D ) {
         self.stationRecord = stationRecord
@@ -69,16 +70,27 @@ class Station : CustomStringConvertible {
         }
     }
     
+    var location : String {
+        get {
+            var fmtr = NSNumberFormatter()
+            fmtr.numberStyle = NSNumberFormatterStyle.DecimalStyle
+            let fmt = fmtr.stringFromNumber(Int(distance / feetPer))
+            return "about \(fmt!) feet away"
+        }
+    }
+    
 }
 
 class WeatherCell : UITableViewCell {
     @IBOutlet weak var weatherImage : UIImageView!
     @IBOutlet weak var weatherLabel : UILabel!
     @IBOutlet weak var timeLabel : UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
-    func loadItem(weather: String?, time: String?, maybeImage: NSData?) {
+    func loadItem(weather: String?, time: String?, maybeImage: NSData?, maybeLocation: String?) {
         weatherLabel.text = weather ?? "No Weather"
         timeLabel.text = time ?? "No Time"
+        locationLabel.text = maybeLocation ?? ""
         if let image = maybeImage {
             weatherImage.image = UIImage(data: image)
             weatherImage.contentScaleFactor = 0.75
@@ -315,7 +327,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         let cell = self.weatherTable.dequeueReusableCellWithIdentifier("weatherCell") as! WeatherCell
         if let ss = stations?[indexPath.row] {
-            cell.loadItem(ss.tempLabel, time: ss.timeLabel, maybeImage: ss.weatherImageData)
+            cell.loadItem(ss.tempLabel, time: ss.timeLabel, maybeImage: ss.weatherImageData, maybeLocation: ss.location)
             
         }
         return cell
