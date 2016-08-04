@@ -9,97 +9,12 @@
 import UIKit
 import CoreLocation
 
-var key = "5828c48f756a7400"
-
-
-
 let wuAPI = "http://api.wunderground.com/api"
 let maxWeather = 5
 
-func computeDistance(p1: CLLocationCoordinate2D, long: CDouble, lat: CDouble) -> Double {
-    let dx2 = pow(p1.latitude - lat, 2.0)
-    let dy2 = pow(p1.longitude - long, 2.0)
-    return pow(dx2 + dy2, 0.5)
-}
-
-class Station : CustomStringConvertible {
-    let stationRecord : [ String : AnyObject]
-    let distance : Double
-    let distanceString : String
-
-    var tempLabel : String?
-    var timeLabel : String?
-    var weatherImageData : NSData?
-    var processed = false
-
-    let feetPer = 0.000003106264313
-    
-    init(stationRecord : [ String : AnyObject], coord : CLLocationCoordinate2D ) {
-        self.stationRecord = stationRecord
-        
-        let lat = stationRecord["lat"] as! Double
-        let long = stationRecord["lon"] as! Double
-        self.distance = computeDistance(coord, long: long, lat: lat)
-        distanceString = String(format: "%.20f", distance)
-//        let neighborhood = ss["neighborhood"] as! String
-    }
-    
-    var urlString : String {
-        get {
-           return "\(wuAPI)/\(key)/conditions/q/pws:\(stationId).json"
-        }
-    }
-    var stationId : String {
-        get {
-            return stationRecord["id"] as! String
-        }
-    }
-    
-    var neighborhood : String? {
-        get {
-            return stationRecord["neighborhood"] as? String
-        }
-    }
-    
-    var description : String {
-        get {
-            var locn = "no neighborhood"
-            if let n = neighborhood {
-                locn = n
-            }
-            return "\(distanceString) \(locn)"
-        }
-    }
-    
-    var location : String {
-        get {
-            var fmtr = NSNumberFormatter()
-            fmtr.numberStyle = NSNumberFormatterStyle.DecimalStyle
-            let fmt = fmtr.stringFromNumber(Int(distance / feetPer))
-            return "about \(fmt!) feet away"
-        }
-    }
-    
-}
-
-class WeatherCell : UITableViewCell {
-    @IBOutlet weak var weatherImage : UIImageView!
-    @IBOutlet weak var weatherLabel : UILabel!
-    @IBOutlet weak var timeLabel : UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    
-    func loadItem(weather: String?, time: String?, maybeImage: NSData?, maybeLocation: String?) {
-        weatherLabel.text = weather ?? "No Weather"
-        timeLabel.text = time ?? "No Time"
-        locationLabel.text = maybeLocation ?? ""
-        if let image = maybeImage {
-            weatherImage.image = UIImage(data: image)
-            weatherImage.contentScaleFactor = 0.75
-        }
-    }
-}
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+    var key : String?
     
     var stations : [Station]?
     
@@ -114,10 +29,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
+    
+//        
+//        // Ask for Authorisation from the User.
+//        self.locationManager.requestAlwaysAuthorization()
         
         // For use in foreground
         self.locationManager.requestWhenInUseAuthorization()
@@ -148,6 +63,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     }
     
     func updateLocationURL() {
+        
+        guard let _ = key else {
+            showSettings(self)
+            return
+        }
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -240,7 +160,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         nextTime = now + 90
         self.locationManager.stopUpdatingLocation()
-        let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/\(key)/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
+        let urlString = "http://api.wunderground.com/api/\(key!)/geolookup/q/\(coord.latitude),\(coord.longitude).json"
+        let requestURL: NSURL = NSURL(string: urlString)!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(urlRequest) {
@@ -264,7 +185,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                                     
                                     
                                     for ss in station {
-                                        newStations.append(Station(stationRecord: ss, coord: coord))
+                                        newStations.append(Station(stationRecord: ss, coord: coord, key: self.key!))
                                     }
                                     self.stations = newStations.sort{ (e1, e2) -> Bool in
                                         return e1.distance < e2.distance
@@ -306,6 +227,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRowAtIndexPath: \(indexPath)")
+        
+    }
+    
+    func setWunderKey(key : String?) {
+        if let k = key {
+            self.key = k
+        }
+    }
+
+    @IBAction func showSettings(sender: AnyObject) {
+        
+        performSegueWithIdentifier("Settings", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let settings = segue.destinationViewController as? SettingsViewController {
+            if let k = key {
+                settings.key = k
+            }
+        }
+    }
+    
+    @IBAction func commitSettings(sender : UIStoryboardSegue) {
+        if let settings = sender.sourceViewController as? SettingsViewController {
+            setWunderKey(settings.getKey())
+            updateLocationURL()
+        }
+        
+    }
+    @IBAction func cancelSettings(sender : UIStoryboardSegue) {
         
     }
 }

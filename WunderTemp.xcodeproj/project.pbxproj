@@ -15,6 +15,9 @@
 		D6B9E13D1D3420DD00FB2DC1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */; };
 		D6B9E1481D3420DD00FB2DC1 /* WunderTempTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1471D3420DD00FB2DC1 /* WunderTempTests.swift */; };
 		D6B9E1531D3420DD00FB2DC1 /* WunderTempUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9E1521D3420DD00FB2DC1 /* WunderTempUITests.swift */; };
+		D6E046D01D52C6F8008922B3 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E046CF1D52C6F8008922B3 /* Station.swift */; };
+		D6E046D21D52C75C008922B3 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E046D11D52C75C008922B3 /* WeatherCell.swift */; };
+		D6E046D41D539F8B008922B3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E046D31D539F8B008922B3 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		D6B9E14E1D3420DD00FB2DC1 /* WunderTempUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WunderTempUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6B9E1521D3420DD00FB2DC1 /* WunderTempUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WunderTempUITests.swift; sourceTree = "<group>"; };
 		D6B9E1541D3420DD00FB2DC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6E046CF1D52C6F8008922B3 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		D6E046D11D52C75C008922B3 /* WeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
+		D6E046D31D539F8B008922B3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 		D6B9E1261D3420DD00FB2DC1 = {
 			isa = PBXGroup;
 			children = (
+				D6E046D11D52C75C008922B3 /* WeatherCell.swift */,
 				D6B9E1311D3420DD00FB2DC1 /* WunderTemp */,
 				D6B9E1461D3420DD00FB2DC1 /* WunderTempTests */,
 				D6B9E1511D3420DD00FB2DC1 /* WunderTempUITests */,
@@ -101,11 +108,13 @@
 			children = (
 				D6B9E1321D3420DD00FB2DC1 /* AppDelegate.swift */,
 				D6B9E1341D3420DD00FB2DC1 /* ViewController.swift */,
+				D6E046CF1D52C6F8008922B3 /* Station.swift */,
 				D6384D3F1D35A27D00E4D0D7 /* WeatherCell.xib */,
 				D6B9E1361D3420DD00FB2DC1 /* Main.storyboard */,
 				D6B9E1391D3420DD00FB2DC1 /* Assets.xcassets */,
 				D6B9E13B1D3420DD00FB2DC1 /* LaunchScreen.storyboard */,
 				D6B9E13E1D3420DD00FB2DC1 /* Info.plist */,
+				D6E046D31D539F8B008922B3 /* SettingsViewController.swift */,
 			);
 			path = WunderTemp;
 			sourceTree = "<group>";
@@ -260,7 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E046D21D52C75C008922B3 /* WeatherCell.swift in Sources */,
 				D6B9E1351D3420DD00FB2DC1 /* ViewController.swift in Sources */,
+				D6E046D01D52C6F8008922B3 /* Station.swift in Sources */,
+				D6E046D41D539F8B008922B3 /* SettingsViewController.swift in Sources */,
 				D6B9E1331D3420DD00FB2DC1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
