@@ -16,6 +16,7 @@ class SettingsViewController : UIViewController {
         if let k = key {
             keyTextField.text = k
         }
+        keyTextField.becomeFirstResponder()
     }
     
     func getKey() -> String? {

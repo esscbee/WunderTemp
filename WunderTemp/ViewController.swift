@@ -11,6 +11,7 @@ import CoreLocation
 
 let wuAPI = "http://api.wunderground.com/api"
 let maxWeather = 5
+let WU_KEY = "WundergroundKey"
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -29,6 +30,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.key = NSUserDefaults.standardUserDefaults().stringForKey(WU_KEY)
     
 //        
 //        // Ask for Authorisation from the User.
@@ -233,6 +236,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     func setWunderKey(key : String?) {
         if let k = key {
             self.key = k
+            NSUserDefaults.standardUserDefaults().setValue(key, forKey: WU_KEY)
         }
     }
 
