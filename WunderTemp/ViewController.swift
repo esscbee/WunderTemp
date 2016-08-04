@@ -9,11 +9,12 @@
 import UIKit
 import CoreLocation
 
-let key = "5828c48f756a7400"
+var key = "5828c48f756a7400"
+
+
+
 let wuAPI = "http://api.wunderground.com/api"
 let maxWeather = 5
-
-//"http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
 
 func computeDistance(p1: CLLocationCoordinate2D, long: CDouble, lat: CDouble) -> Double {
     let dx2 = pow(p1.latitude - lat, 2.0)
@@ -111,16 +112,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
     private var foregroundNotification: NSObjectProtocol!
 
-    
-    
-//    @IBOutlet weak var tempLabel: UILabel!
-//    @IBOutlet weak var timeLabel: UILabel!
-//    @IBOutlet weak var weatherImage: UIImageView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(timerCallBack), userInfo: nil, repeats: false)
         
         // Ask for Authorisation from the User.
         self.locationManager.requestAlwaysAuthorization()
@@ -236,17 +230,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
     }
     
-//    func timerCallBack() {
-//        if let _ = self.stations {
-//            let now = NSDate().timeIntervalSince1970
-//            if now > self.nextTime {
-//                updateTemp()
-//                nextTime = now + 60
-//            }
-//        }
-//    }
-    
-    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coord = manager.location?.coordinate else {
             return
@@ -257,7 +240,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         }
         nextTime = now + 90
         self.locationManager.stopUpdatingLocation()
-        let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/5828c48f756a7400/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
+        let requestURL: NSURL = NSURL(string: "http://api.wunderground.com/api/\(key)/geolookup/q/\(coord.latitude),\(coord.longitude).json")!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(urlRequest) {
@@ -291,18 +274,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
                                         print("\(ss)")
                                     }
                                     
-//                                    if let descr = foundDescr {
-//                                        if let stationId = descr["id"] as? String {
-//                                            self.stationUrl = "http://api.wunderground.com/api/5828c48f756a7400/conditions/q/pws:\(stationId).json"
-//                                        }
-//                                        
-//                                        if let neighborhood = descr["neighborhood"] as? String {
-//                                            self.neighborhood = neighborhood
-//                                        } else {
-//                                            self.neighborhood = nil
-//                                        }
-//                                        
-//                                    }
                                 }
                             }
                             
